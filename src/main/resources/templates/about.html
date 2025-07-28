@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-    <h1>This is About Page</h1>
-    <hr>
-    <!-- using fragment   -->
-    <div class="host-tag" th:replace="~{base :: parent('one' , 'two')}"></div>
-</body>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+    <head>
+        <title>About</title>
+    </head>
+    <body>
+    <div id = "content">
+        <h1>Welcome to About Page</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto beatae consequatur earum, id illum nam
+            nesciunt optio, perferendis perspiciatis quas quos rem sunt unde ut voluptatibus? Deserunt eaque nostrum
+            voluptatem.
+        </p>
+    </div>
+    </body>
 </html>

@@ -1,5 +1,43 @@
-<div class="parent-tag" th:fragment="parent(x,y)">
-    <h1>This is Parent Div</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, labore?</p>
-    <h1>The Value of X is <span th:text="${x}"></span></h1>
-</div>
+<!doctype html>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="parent(content,title,script)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title data-th-replace="${title}">SCM</title>
+<!--    Flowbite cdn link CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{'/CSS/output.css'}"/>
+    <link rel="stylesheet" data-th-href="@{'/CSS/style.css'}"/>
+<!--    Font Awesome cdn link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white">
+
+    <!-- Common Header-->
+    <div data-th-replace="Navbar :: navbar"></div>
+
+    <!-- LoggedIn User: Sidebar -->
+    <div data-th-if="${LoggedInUser}">
+        <div data-th-replace="~{user/sidebar :: sidebar}">
+
+        </div>
+    </div>
+
+    <!-- main/dynamic content -->
+    <div class="p-4 pt-24">
+        <section data-th-replace="${content}"></section>
+    </div>
+
+    <!-- Common Footer -->
+    <!--<div class="p-4">Footer : Smart Contact Manager</div>-->
+
+<!--    Flowbite cdn Link JS-->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"> </script>
+    <script data-th-src="@{'/js/script.js'}"></script>
+
+</body>
+</html>

@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title data-th-text="${LoggedInUser.name}+' | SCM'">Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" data-th-href="@{'/CSS/output.css'}"/>
 </head>
 <body>
-    <div id="content">
-        <h1>Welcome to Home Page</h1>
+<div id="content">
+    <div class="flex justify-center flex-col items-center">
+        <h1 class="text-5xl">Welcome to Profile Page <span data-th-text="${LoggedInUser.name}"></span>!</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime natus officia perferendis recusandae sunt? Amet.</p>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 </html>
