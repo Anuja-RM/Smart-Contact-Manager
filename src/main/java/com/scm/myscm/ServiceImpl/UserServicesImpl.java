@@ -1,12 +1,15 @@
 package com.scm.myscm.ServiceImpl;
 import com.scm.myscm.entities.User;
 import com.scm.myscm.helpers.AppConstants;
+import com.scm.myscm.helpers.EmailVerificationLink;
 import com.scm.myscm.helpers.ResourseNotFoundException;
 import com.scm.myscm.repositories.UserRepo;
+import com.scm.myscm.services.EmailService;
 import com.scm.myscm.services.UserServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,6 +24,13 @@ public class UserServicesImpl implements UserServices {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailService emailService;
+
+    //For enabling/disabling email verification
+    @Value("${scm.email.verification.enabled:false}")
+    private boolean emailVerificationEnabled;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -37,7 +47,28 @@ public class UserServicesImpl implements UserServices {
         user.setRoleList(List.of(AppConstants.ROLE_USER));
 
         logger.info(user.getProviders().toString());
-        return userRepo.save(user);
+
+        if (emailVerificationEnabled) {
+            user.setEnabled(false);
+
+            String emailToken = UUID.randomUUID().toString();
+            user.setEmailToken(emailToken);
+
+            User savedUser = userRepo.save(user);
+
+            String emailLink = EmailVerificationLink.getLinkForEmailVerification(emailToken);
+            emailService.sendEmail(savedUser.getEmail(),
+                    "Verify Account : Smart Contact Manager",
+                    emailLink);
+
+            return savedUser;
+        } else {
+            // no verification → enable immediately
+            user.setEnabled(true);
+            user.setEmailToken(null);
+
+            return userRepo.save(user);
+        }
     }
 
     @Override

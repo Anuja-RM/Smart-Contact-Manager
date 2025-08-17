@@ -30,6 +30,8 @@ public class SecurityConfig {
     private SecurityCustomUserDetailService userDetailService;
     @Autowired
     private OAuthAutenticationSuccessHandler handler;
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
 
     //Configuration for spring security authentication provider
     @Bean
@@ -64,6 +66,7 @@ public class SecurityConfig {
             formLogin.failureUrl("/login?error=true");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
+            formLogin.failureHandler(authFailureHandler);
 //            Can be used for handling failure or success in login similarly(was just a demo no need of it right now)
 //            formLogin.successHandler(new AuthenticationSuccessHandler() {
 //                @Override
@@ -71,6 +74,7 @@ public class SecurityConfig {
 //                    throw new UnsupportedOperationException("Not supported yet.");
 //                }
 //            });
+
         });
 
         //logout configuration

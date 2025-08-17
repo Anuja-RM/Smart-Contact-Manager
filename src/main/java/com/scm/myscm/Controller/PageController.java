@@ -3,24 +3,27 @@ import com.scm.myscm.entities.User;
 import com.scm.myscm.forms.UserForm;
 import com.scm.myscm.helpers.Message;
 import com.scm.myscm.helpers.MessageType;
+import com.scm.myscm.repositories.UserRepo;
 import com.scm.myscm.services.UserServices;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PageController {
 
-    //use constructor injection instead for production purpose
+    //use constructor injection instead, for production purpose
     @Autowired
     private UserServices userServices;
+
+    @Autowired
+    private UserRepo userRepo;
+
 
     @GetMapping("/")
     public String index(){
@@ -44,7 +47,7 @@ public class PageController {
 
     @RequestMapping("/contact")
     public String contactPage() {
-        return "contact";
+        return "contact_us";
     }
 
     @RequestMapping("/signup")
@@ -67,6 +70,7 @@ public class PageController {
 
         //validate form data, for this add annotations in the userForm that passes the form data to the backend view SS below
         if(rBindingResult.hasErrors()){
+            session.setAttribute("message", Message.builder().content("Please correct the following errors").type(MessageType.red).build());
             return "signup";
         }
 
@@ -96,4 +100,26 @@ public class PageController {
         //redirect
         return "redirect:/signup";
     }
+
+    //Process Email verification
+    @RequestMapping("/auth/verify-email")
+    public String verifyEmail(@RequestParam("token") String token){
+
+        User user = userRepo.findByEmailToken(token).orElse(null);
+
+        if (user != null){
+            //user is fetched, process it
+            if(user.getEmailToken().equals(token)){
+                user.setEmailVerified(true);
+                user.setEnabled(true);
+                userRepo.save(user);
+                return "success_page";
+            }
+
+            return "error_page";
+        }
+
+        return "error_page";
+    }
+
 }

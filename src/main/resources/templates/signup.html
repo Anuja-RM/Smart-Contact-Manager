@@ -14,16 +14,17 @@
         <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
         <!-- Card -->
         <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
-            <div class="block p-6 border-t-[15px] border-blue-700 bg-white rounded-xl shadow-sm hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-900">
-                <!-- message/alert -->
-                <div data-th-replace="message::messagebox"></div>
+            <div class="block p-6 border-t-[15px] border-blue-700 bg-white rounded-xl shadow-sm hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-[#161d2a]">
 
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     SignUp Here
                 </h5>
-                <p class="font-normal text-gray-700 dark:text-gray-400">
+                <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">
                     Start managing your contacts on cloud.....
                 </p>
+
+                <!-- message/alert -->
+                <div data-th-replace="message::messagebox"></div>
 
                 <!-- Form -->
                 <form data-th-action="@{'/do-signup'}" method="post" data-th-object="${userForm}" class="mt-4" novalidate>

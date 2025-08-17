@@ -1,4 +1,5 @@
 package com.scm.myscm.entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,14 +34,16 @@ public class User implements UserDetails {
     @Lob
     @Column(length = 1000)
     private String profilePic;
-    private boolean enabled = true;
+    private boolean enabled = false;
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
     //Fields for login through SELF,GOOGLE,GITHUB
     @Enumerated(EnumType.STRING)
     private Providers providers = Providers.SELF;
     private String providerUserId;
+    private String emailToken;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
     private List<Contact> contacts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -71,5 +74,10 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 }

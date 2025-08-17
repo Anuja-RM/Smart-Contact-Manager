@@ -1,9 +1,12 @@
 package com.scm.myscm.forms;
 
+import com.scm.myscm.validator.ValidFile;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -24,10 +27,13 @@ public class UserForm {
     private String password;
 
     @NotBlank(message = "Contact Number is required")
-    @Size(min = 10, max = 12, message = "Invalid Phone Number")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid Phone Number")
     private String phoneNumber;
 
     @NotBlank(message = "About is required")
     private String about;
+
+    @ValidFile
+    private MultipartFile profilePic;
 
 }

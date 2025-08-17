@@ -22,7 +22,6 @@ public class RootController {
             return;
         }
 
-        System.out.println("Adding Logged in user infomation");
         String username = LoggedInUserHandler.getEmailOfLoggedInUser(authentication);
 
         User user = userService.getUserByEmail(username);

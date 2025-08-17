@@ -14,9 +14,7 @@
         <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
         <!-- Card -->
         <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
-            <div class="block p-6 border-t-[15px] border-green-700 bg-white rounded-xl shadow-sm hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-900">
-                <!-- message/alert -->
-                <div data-th-replace="message::messagebox"></div>
+            <div class="block p-6 border-t-[15px] border-green-700 bg-white rounded-xl shadow-sm hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-[#161d2a]">
 
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     Login Here
@@ -25,9 +23,9 @@
                     Start managing your contacts on cloud.....
                 </p>
 
-                <div class="block p-1 text-red-300 text-center my-2 rounded-lg border border-red-900 bg-red-700" data-th-if="${param.error}">Invalid Username and Password.</div>
+                <div data-th-if="${param.error}" class="p-4 mt-2 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-100 dark:bg-red-950 dark:text-red-400 dark:border-red-800">Invalid Username and Password.</div>
 
-                <div class="block p-1 text-green-300 text-center my-2 rounded-lg border border-green-900 bg-green-700" data-th-if="${param.logout}">You have been logged out.</div>
+                <div data-th-if="${param.logout}" class="p-4 mt-2 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-100 dark:bg-green-950 dark:text-green-400 dark:border-green-800">You have been logged out.</div>
 
                 <!-- Form -->
                 <form  data-th-action="@{'/do-login'}" method="post" class="mt-4" novalidate>
@@ -90,6 +88,8 @@
                         Sign in with GitHub
                     </a>
                 </div>
+
+                <a data-th-href="@{'/signup'}" class="mt-3 flex justify-center text-blue-600 hover:underline">Don't have an Account? SignUp.</a>
 
             </div>
         </div>

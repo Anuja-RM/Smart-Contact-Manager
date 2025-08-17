@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title}, ~{})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-th-text="${LoggedInUser.name}+' | SCM'">Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{'/CSS/output.css'}"/>
+</head>
+<body>
+<div id="content">
+
+    <div class="max-w-4xl mx-auto p-6">
+        <h2 class="text-2xl font-bold mb-6">Favourite Contacts</h2>  
+
+        <div class="grid gap-4">
+            <div data-th-object="${contact}" data-th-each="contact : ${favorites}" class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl">
+                <h3 class="text-lg font-semibold" th:text="${contact.name}"></h3>
+                <p class="text-gray-600 dark:text-gray-300" th:text="${contact.email}"></p>
+                <p class="text-gray-600 dark:text-gray-300" th:text="${contact.phoneNumber}"></p>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(favorites)}" class="text-gray-500 mt-6">
+            No favourite contacts found.
+        </div>
+    </div>
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>
